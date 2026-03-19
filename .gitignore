@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+postgres/
+keys/
+.env
+CLAUDE.md
+.claude/

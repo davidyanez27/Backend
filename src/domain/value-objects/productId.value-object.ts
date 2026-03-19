@@ -1,0 +1,14 @@
+import { CustomError } from "../../application/errors/customs.error";
+
+export class ProductId {
+  constructor(
+    private value: number,
+    public error: string = "Invalid ProductId",
+  ) {
+    if (value <= 0) throw CustomError.badRequest(error);
+  }
+
+  getValue(): number {
+    return this.value;
+  }
+}
