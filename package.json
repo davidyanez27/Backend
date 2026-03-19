@@ -6,7 +6,7 @@
   "scripts": {
     "docker": "docker compose up -d",
     "dev": "tsnd --respawn --clear -r tsconfig-paths/register src/app.ts",
-    "build": "rimraf ./dist && tsc && tsc-alias",
+    "build": "rm -rf dist && tsc && tsc-alias",
     "start": "pnpm run build && node dist/src/app.js",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:generate": "prisma generate",
