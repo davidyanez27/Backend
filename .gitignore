@@ -3,6 +3,6 @@ dist
 build
 postgres/
 keys/
-.env
 CLAUDE.md
 .claude/
+.env
