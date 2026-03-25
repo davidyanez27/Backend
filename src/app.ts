@@ -15,6 +15,13 @@ async function main() {
     postgrestUrl: envs.POSTGRES_URL,
     dbName: envs.POSTGRES_DB
   })
+let routes;
+try {
+  routes = AppRoutes.routes;
+  console.log('✅ Routes loaded successfully');
+} catch (error) {
+  console.error('❌ Routes failed to load:', error);
+}
 
   const server = new Server({
     port: envs.PORT,
