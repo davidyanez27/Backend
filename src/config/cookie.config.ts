@@ -4,22 +4,26 @@ export class CookieConfig {
   static readonly TOKEN_COOKIE_NAME = 'auth_token';
   static readonly REFRESH_TOKEN_COOKIE_NAME = 'refresh_token';
 
+  private static get isProduction() {
+    return envs.NODE_ENV === 'production';
+  }
+
   static getTokenCookieOptions() {
     return {
-      httpOnly: true,           // Prevents XSS attacks
-      secure: envs.NODE_ENV === 'production', // HTTPS only in production
-      sameSite: 'lax' as const, // CSRF protection
-      maxAge: 15 * 60 * 1000,   // 15 minutes
+      httpOnly: true,
+      secure: this.isProduction,
+      sameSite: this.isProduction ? 'none' as const : 'lax' as const,
+      maxAge: 15 * 60 * 1000,
       path: '/',
     };
   }
 
   static getRefreshTokenCookieOptions() {
     return {
-      httpOnly: true,           // Prevents XSS attacks
-      secure: envs.NODE_ENV === 'production', // HTTPS only in production
-      sameSite: 'lax' as const, // CSRF protection
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      httpOnly: true,
+      secure: this.isProduction,
+      sameSite: this.isProduction ? 'none' as const : 'lax' as const,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
     };
   }
@@ -27,8 +31,8 @@ export class CookieConfig {
   static getClearCookieOptions() {
     return {
       httpOnly: true,
-      secure: envs.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
+      secure: this.isProduction,
+      sameSite: this.isProduction ? 'none' as const : 'lax' as const,
       path: '/',
     };
   }

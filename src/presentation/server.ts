@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import cors from "cors";
 import type { Express } from 'express';
 import cookieParser from "cookie-parser";
+import { envs } from "../config";
 import { notFoundErrrorMiddleware, prismaErrorMiddleware, zodErrorMiddleware, customErrorMiddleware, serverErrorMiddleware} from "./middlewares";
 
 interface Options {
@@ -27,7 +28,7 @@ export class Server {
   async start() {
     this.app.use(
       cors({
-        origin: "http://localhost:5173",
+        origin: envs.WEBSERVICE_URL,
         credentials: true,
       })
     );

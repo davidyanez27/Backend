@@ -12,18 +12,15 @@ export class AppRoutes {
         const authQueryRepository = new AuthQueryRepositoryImpl(authQueryDatasource);
         const authMiddleware = new AuthMiddleware(authQueryRepository);
 
-        router.use('/api/auth',  AuthRoutes.routes)
+        // Public routes — NO middleware
+        router.use('/api/auth', AuthRoutes.routes);
 
-        router.use('/api',  authMiddleware.ValidateJWT)
-        router.use('/api/products', ProductsRoutes.routes)
-        router.use('/api/companies', CompanyRoutes.routes)
-        router.use('/api/customers', CustomerRoutes.routes)
-        router.use('/api/invoices', InvoiceRoutes.routes)
-        router.use('/api/users', UsersRoutes.routes)
-
-
-
-        // router.use('/api/reports',  ReportsRoutes.routes)
+        // Protected routes — WITH middleware
+        router.use('/api/products', authMiddleware.ValidateJWT, ProductsRoutes.routes);
+        router.use('/api/companies', authMiddleware.ValidateJWT, CompanyRoutes.routes);
+        router.use('/api/customers', authMiddleware.ValidateJWT, CustomerRoutes.routes);
+        router.use('/api/invoices', authMiddleware.ValidateJWT, InvoiceRoutes.routes);
+        router.use('/api/users', authMiddleware.ValidateJWT, UsersRoutes.routes);
 
 
 
